@@ -1,28 +1,51 @@
-import com.sun.javafx.css.FontUnits;
-
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class AppRunner {
 
     public static void main(String[] args) {
         Freight freight = new Freight();
-        Truck truck = new Truck(500);
-        generateFraigth(25, freight);
+        List<Truck> trucks = new ArrayList<Truck>();
+        generateTrucks(2, trucks);
+        System.out.println(trucks);
+        generateFraigth(10, freight);
         System.out.println(freight.toString());
-        loadTruck(freight, truck, 100000);
-        System.out.println(truck.toString());
-        System.out.println(truck.getPrice());
+
+        loadTrucks(trucks, freight, 10000);
+        System.out.println(trucks);
+
+        trucks = Filter.filter(trucks, TruckPredicate.byProducts(CoffeePredicate.byKind(CoffeeKind.JAVA, CoffeeKind.OPERA)));
+        System.out.println(trucks);
 //        Collections.sort(freight.getProducts(), new MultiComparator<>(
 //                new OrderedComparator<>(ProductComparator.KIND, OrderedComparator.Order.DESC),
 //                new OrderedComparator<>(ProductComparator.PRICE, OrderedComparator.Order.DESC)));
 //        System.out.println(freight.toString());
+
+//        List<Coffee> filterList = new ArrayList<Coffee>();
+//        for (int i = 0; i < freight.getSize(); i++) {
+//            filterList.add((Coffee) freight.getElem(i));}
+//        filterList = Filter.filter(filterList, CoffeePredicate.byKind(CoffeeKind.JAVA, CoffeeKind.OPERA));
+//        System.out.println(filterList);
+    }
+
+    private static void loadTrucks(List<Truck> trucks, Freight freight, long price) {
+        for (int i = 0; i < trucks.size(); i++) {
+            loadTruck(freight, trucks.get(i), price);
+        }
     }
 
 
     public static void generateFraigth(int n, Freight freight) {
         for (int i = 0; i < n; i++) {
             freight.add(new Coffee(random(20), randomeKind(), randomCond()));
+        }
+    }
+
+    private static void generateTrucks(int n, List<Truck> trucks) {
+        for (int i = 0; i < n; i++) {
+            trucks.add(new Truck(random(1000)));
         }
     }
 

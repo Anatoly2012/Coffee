@@ -32,10 +32,9 @@ public class Truck implements Measurable, Rateable {
         return weight;
     }
 
-//    @Override
-//    public int getVolume() {
-//        return 0;
-//    }
+    public List<AbstractProduct> getProducts() {
+        return products;
+    }
 
     @Override
     public long getPrice() {
@@ -68,8 +67,8 @@ public class Truck implements Measurable, Rateable {
     @Override
     public String toString() {
         return "Truck{" +
-                ", capacity = " + capacity +
-                "freights = " + products +
+                "capacity = " + capacity +
+                ", freights = " + products +
                 '}';
     }
 }
